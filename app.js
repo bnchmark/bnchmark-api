@@ -4,9 +4,19 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
+const config = require('./config');
+
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const typeformRouter = require('./routes/typeform');
+
+const mongoose = require('mongoose');
+
+mongoose.connect(config.MONGO_URI, {useNewUrlParser: true});
+
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+
 
 const app = express();
 
